@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => { // o que ira realizar na base de dados
-    return queryInterface.createTable('users', 
+    return queryInterface.createTable('addresses', 
       { 
         id: {
           type: Sequelize.INTEGER,
@@ -10,12 +10,26 @@ module.exports = {
           autoIncrement: true,
           allowNull: false
         },
-        name: {
+        user_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: { //referencia uma tabela
+            model: 'users', //tabela referencia
+            key: 'id' //coluna referenciada
+          },
+          onUpdate: 'CASCADE', // o que acontece ao atualizar o id do usuario
+          onDelete: 'CASCADE' // o que acontece ao deletar o id do usuario
+        },
+        zipcode: {
           type: Sequelize.STRING,
           allowNull: false
         },
-        email: {
+        street: {
           type: Sequelize.STRING,
+          allowNull: false
+        },
+        number: {
+          type: Sequelize.INTEGER,
           allowNull: false
         },
         created_at: {
@@ -30,6 +44,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => { // o que ira fazer se der erro ao criar a migraton
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('addresses');
   }
 };
